@@ -15,9 +15,18 @@ class Ring {
 
     draw() {
         ctx.strokeStyle = "red";
+        ctx.lineWidth = 8;
         ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.lineTo(300, 400);
+        ctx.moveTo(centerX + 200, centerY);
+
+        for (let i = 0; i < 360; i++) {
+            let currAngleInRadians = (i * Math.PI) / 180;
+            let x = centerX + Math.cos(currAngleInRadians) * 200;
+            let y = centerY + Math.sin(currAngleInRadians) * 200;
+
+            ctx.lineTo(x, y);
+        }
+
         ctx.closePath();
         ctx.stroke();
     }
@@ -25,10 +34,15 @@ class Ring {
 
 const numOfRings = 1;
 let ringsArr;
+let centerX;
+let centerY;
 
 function init() {
     canvas.width = document.documentElement.clientWidth;
     canvas.height = document.documentElement.clientHeight;
+
+    centerX = canvas.width / 2;
+    centerY = canvas.height / 2;
 
     ringsArr = [];
 
