@@ -4,11 +4,17 @@
 const canvas = document.querySelector(".canvas");
 const ctx = canvas.getContext("2d");
 
+// Rings Setup
+const numOfRings = 1;
+const maxWavesAmplitude = 17;
+const numOfWavesPerRing = 7;
+const ringRadius = 200;
+let ringsArr;
+let centerX;
+let centerY;
+let startAngle = 0;
+
 class Ring {
-    constructor() {
-
-    }
-
     update() {
         this.draw();
     }
@@ -17,25 +23,35 @@ class Ring {
         ctx.strokeStyle = "red";
         ctx.lineWidth = 8;
         ctx.beginPath();
-        ctx.moveTo(centerX + 200, centerY);
-
-        for (let i = 0; i < 360; i++) {
-            let currAngleInRadians = (i * Math.PI) / 180;
-            let x = centerX + Math.cos(currAngleInRadians) * 200;
-            let y = centerY + Math.sin(currAngleInRadians) * 200;
-
-            ctx.lineTo(x, y);
+        
+        for (let i = -180; i < 180; i++) {
+            let currAngleInRadians = (i + startAngle) * Math.PI / 180;
+            let displacement = 0;
+            let now = Math.abs(i);
+            
+            if (now > 70) {
+                displacement = (now - 70) / 70;
+            }
+            
+            if (displacement >= 1) {
+                displacement = 1
+            }
+            
+            let waveAmplitude = ringRadius + displacement * Math.sin(currAngleInRadians * numOfWavesPerRing) * maxWavesAmplitude;
+            let x = centerX + Math.cos(currAngleInRadians) * waveAmplitude;
+            let y = centerY + Math.sin(currAngleInRadians) * waveAmplitude;
+            
+            if (i > -180) {
+                ctx.lineTo(x, y);
+            } else {
+                ctx.moveTo(x, y);
+            }
         }
 
         ctx.closePath();
         ctx.stroke();
     }
 }
-
-const numOfRings = 1;
-let ringsArr;
-let centerX;
-let centerY;
 
 function init() {
     canvas.width = document.documentElement.clientWidth;
@@ -61,6 +77,8 @@ init();
     for (let i = 0; i < ringsArr.length; i++) {
         ringsArr[i].update();
     }
+
+    startAngle++;
 })();
 
 
