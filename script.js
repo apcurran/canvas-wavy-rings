@@ -1,8 +1,8 @@
 "use strict";
 
 /** @type {HTMLCanvasElement} */
-const canvas = document.querySelector(`canvas`);
-const ctx = canvas.getContext(`2d`);
+const canvas = document.querySelector(".canvas");
+const ctx = canvas.getContext("2d");
 
 let centerX = 0;
 let centerY = 0;
@@ -20,7 +20,9 @@ const numberOfRings     = 3;
 const ringRadiusOffset  = 7;
 const ringRadius        = 200;
 const waveOffset        = 15;
-const colors            = [`#771111`, `#bb1111`, `#ff1111`];
+const colors            = ["#771111", "#bb1111", "#ff1111"];
+const maxWavesAmplitude = 17;
+const numberOfWaves     = 7;
 let startAngle          = 0;
 
 function updateRings() {
@@ -33,9 +35,6 @@ function updateRings() {
 
   startAngle >= 360? startAngle = 0 : startAngle++;
 }
-
-const maxWavesAmplitude = 17;
-const numberOfWaves     = 7;
 
 function drawRing(radius, color, offsetAngle) {
   ctx.strokeStyle = color;
