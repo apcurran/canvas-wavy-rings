@@ -7,23 +7,29 @@ const ctx = canvas.getContext("2d");
 let centerX = 0;
 let centerY = 0;
 
-function init() {
-  canvas.width  = innerWidth;
-  canvas.height = innerHeight;
-  centerX = canvas.width  / 2;
-  centerY = canvas.height / 2;
-}
-
-init();
-
 const numberOfRings     = 3;
 const ringRadiusOffset  = 7;
-const ringRadius        = 200;
+let ringRadius          = 200;
 const waveOffset        = 15;
 const colors            = ["#771111", "#bb1111", "#ff1111"];
 const maxWavesAmplitude = 17;
 const numberOfWaves     = 7;
 let startAngle          = 0;
+
+function init() {
+  canvas.width  = innerWidth;
+  canvas.height = innerHeight;
+  centerX = canvas.width  / 2;
+  centerY = canvas.height / 2;
+
+  if (canvas.width < 800) {
+    ringRadius = 130;
+  } else {
+    ringRadius = 200;
+  }
+}
+
+init();
 
 function updateRings() {
   for (let i = 0; i < numberOfRings; i++) {
